@@ -34,12 +34,7 @@ $main_html='<div class="caption">'.$locale['donation'].'</div>
   </tr>
   <tr>
     <td colspan="2" align="center">
-      <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
-        <input type="hidden" name="cmd" value="_s-xclick">
-        <input type="hidden" name="hosted_button_id" value="170063">
-        <input type="image" src="gfx/paypal.gif" border="0" name="submit" alt="">
-        <img alt="" border="0" src="https://www.paypal.com/it_IT/i/scr/pixel.gif" width="1" height="1">
-      </form>
+      <a href="https://bmc.link/flhinrichsen">Spende eine Kaffee</a>
     </td>
   </tr>
 </table>

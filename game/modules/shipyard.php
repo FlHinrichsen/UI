@@ -1061,7 +1061,7 @@ if ($db->num_rows()>0) {
     
     $template= $db->queryrow('SELECT * FROM ship_templates WHERE (owner="'.$game->player['user_id'].'") AND (id="'.$scheduler['ship_type'].'")');
 
-    $game->out('<tr><th>'.constant($game->sprache("TEXT31")).'</th><th>'.constant($game->sprache("TEXT32")).'</th><th>'.constant($game->sprache("TEXT34")).'</th><th> Azione </th></tr><tr>');
+    $game->out('<tr><th>'.constant($game->sprache("TEXT31")).'</th><th>'.constant($game->sprache("TEXT32")).'</th><th>'.constant($game->sprache("TEXT34")).'</th><th>'.constant($game->sprache("TEXT77")).'</th></tr><tr>');
     $game->out('<td width="25%" align="center"> <a href="javascript:void(0);" onmouseover="return overlib(\''.CreateInfoText($template).'\', CAPTION, \''.addslashes($template['name']).'\', WIDTH, 500, '.OVERLIB_STANDARD.');" onmouseout="return nd();">'.$template['name'].'</a></td>');
     $game->out('<td width="25%" align="center"> <b id="timer2" title="time1_'.($NEXT_TICK+TICK_DURATION*60*($scheduler['finish_build']-$ACTUAL_TICK)).'_type1_1">&nbsp;</b></td>');
     
@@ -1095,6 +1095,7 @@ $query_line_0 = 'SELECT * FROM ship_templates WHERE owner = '.$game->player['use
 
 $list_line_0 = $db->query($query_line_0);
 $n_tplt_0 = $db->num_rows($list_line_0);
+$table0 = array();
 if($n_tplt_0 > 0) {
     $elements_lines_0 = $db->fetchrowset($list_line_0);
     foreach ($elements_lines_0 AS $id => $element_item) {
@@ -1185,6 +1186,7 @@ $query_line_1 = 'SELECT * FROM ship_templates WHERE owner = '.$game->player['use
 
 $list_line_1 = $db->query($query_line_1);
 $n_tplt_1 = $db->num_rows($list_line_1);
+$table1 = array();
 if($n_tplt_1 > 0) {
     $elements_lines_1 = $db->fetchrowset($list_line_1);
     foreach ($elements_lines_1 AS $id => $element_item) {
@@ -1278,6 +1280,7 @@ $query_line_2 = 'SELECT * FROM ship_templates WHERE owner = '.$game->player['use
 
 $list_line_2 = $db->query($query_line_2);
 $n_tplt_2 = $db->num_rows($list_line_2);
+$table2 = array();
 if($n_tplt_2 > 0) {
     $elements_lines_2 = $db->fetchrowset($list_line_2);
     foreach ($elements_lines_2 AS $id => $element_item) {
@@ -1372,6 +1375,7 @@ $query_line_3 = 'SELECT * FROM ship_templates WHERE owner = '.$game->player['use
 
 $list_line_3 = $db->query($query_line_3);
 $n_tplt_3 = $db->num_rows($list_line_3);
+$table3 = array();
 if($n_tplt_3 > 0) {
     $elements_lines_3 = $db->fetchrowset($list_line_3);
     foreach ($elements_lines_3 AS $id => $element_item) {

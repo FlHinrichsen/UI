@@ -1540,11 +1540,11 @@ Credits: '.$config['site_url'].'/index.php?a=imprint';
                 $receiver_3=$db->queryrow('SELECT user_id FROM user WHERE user_name="'.htmlspecialchars($_POST['receiver_3']).'" AND user_active=1');
                 $receiver_4=$db->queryrow('SELECT user_id FROM user WHERE user_name="'.htmlspecialchars($_POST['receiver_4']).'" AND user_active=1');
                 $receiver_5=$db->queryrow('SELECT user_id FROM user WHERE user_name="'.htmlspecialchars($_POST['receiver_5']).'" AND user_active=1');
-                if (!isset($receiver_1['user_id'])) $receiver_1['user_id']=-1;
-                if (!isset($receiver_2['user_id'])) $receiver_2['user_id']=-1;
-                if (!isset($receiver_3['user_id'])) $receiver_3['user_id']=-1;
-                if (!isset($receiver_4['user_id'])) $receiver_4['user_id']=-1;
-                if (!isset($receiver_5['user_id'])) $receiver_5['user_id']=-1;
+                if (!isset($receiver_1['user_id'])) $receiver_1['user_id']=0;
+                if (!isset($receiver_2['user_id'])) $receiver_2['user_id']=0;
+                if (!isset($receiver_3['user_id'])) $receiver_3['user_id']=0;
+                if (!isset($receiver_4['user_id'])) $receiver_4['user_id']=0;
+                if (!isset($receiver_5['user_id'])) $receiver_5['user_id']=0;
 
                 $sql = 'UPDATE user
                         SET user_sitting_password = "'.$game->player['user_sitting_password'].'",

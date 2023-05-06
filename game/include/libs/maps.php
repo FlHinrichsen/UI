@@ -23,7 +23,7 @@
 
 
 class math {
-    function pythagoras_hc($hypotenuse, $cathetus) {
+    static function pythagoras_hc($hypotenuse, $cathetus) {
         return sqrt( ( ($hypotenuse * $hypotenuse) - ($cathetus * $cathetus) ) );
     }
 
@@ -34,7 +34,7 @@ class math {
 
 
 class maps {
-    function maps() {
+    function __construct() {
         global $game;
 
         $this->galaxy_map_size = $game->galaxy_map_size;

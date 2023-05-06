@@ -33,7 +33,7 @@ define('NL', "\n");
 
 // Duration of ticks in minutes
 
-define('TICK_DURATION', 3);
+define('TICK_DURATION', 1);
 
 
 // Time offset
@@ -74,7 +74,7 @@ define('STGC_RACEMAKER', 5);
 
 define('Q_UID', 1);
 
-define('DATA_UID', 2);
+define('DATA_UID', 11);
 
 
 
@@ -119,7 +119,7 @@ define('INDEPENDENT_USERID', 4);
 
 // Supportuser-ID:
 
-define('SUPPORTUSER', 5);
+define('SUPPORTUSER', 11);
 
 // Borg NPC:
 
@@ -164,6 +164,8 @@ define('ALLIANCE_STATUS_ADMIN', 2);
 define('ALLIANCE_STATUS_OWNER', 3);
 
 define('ALLIANCE_STATUS_DIPLO', 4);
+
+define('ALLIANCE_STATUS_FINANZ', 5);
 
 
 // Alliance diplomacy - Constant values

@@ -65,28 +65,28 @@ function UnitTime($unit)
 
 function UnitTimeTicks($unit)
 {
-global $db;
-global $game;
-global $RACE_DATA, $UNIT_NAME, $UNIT_DATA, $MAX_BUILDING_LVL,$NEXT_TICK,$ACTUAL_TICK;
+	global $db;
+	global $game;
+	global $RACE_DATA, $UNIT_NAME, $UNIT_DATA, $MAX_BUILDING_LVL,$NEXT_TICK,$ACTUAL_TICK;
 
-$time=$UNIT_DATA[$unit][4];
-$time*=$RACE_DATA[$game->player['user_race']][2];
-$time/=100;
-$time*=(100-2*($game->planet['research_4']*$RACE_DATA[$game->player['user_race']][20]));
+	$time=$UNIT_DATA[$unit][4];
+	$time*=$RACE_DATA[$game->player['user_race']][2];
+	$time/=100;
+	$time*=(100-2*($game->planet['research_4']*$RACE_DATA[$game->player['user_race']][20]));
 
-if ($time<1) $time=1;
-$time=round($time,0);
+	if ($time<1) $time=1;
+	$time=round($time,0);
 
-return $time;
+	return $time;
 }
 
 function Stop_Train()
 {
-global $db;
-global $game;
-global $UNIT_NAME, $UNIT_DESCRIPTION, $UNIT_DATA, $MAX_BUILDING_LVL,$NEXT_TICK,$ACTUAL_TICK;
-$db->query('UPDATE planets SET unittrainid_nexttime="-1" WHERE planet_id="'.$game->planet['planet_id'].'"');
-$game->planet['unittrainid_nexttime']=0;
+	global $db;
+	global $game;
+	global $UNIT_NAME, $UNIT_DESCRIPTION, $UNIT_DATA, $MAX_BUILDING_LVL,$NEXT_TICK,$ACTUAL_TICK;
+	$db->query('UPDATE planets SET unittrainid_nexttime="0" WHERE planet_id="'.$game->planet['planet_id'].'"');
+	$game->planet['unittrainid_nexttime']=0;
 }
 
 function Start_Train()
@@ -180,29 +180,32 @@ function Reset_List()
 
 function Save_List()
 {
-global $db;
-global $game;
-global $UNIT_NAME, $UNIT_DESCRIPTION, $UNIT_DATA, $MAX_BUILDING_LVL,$NEXT_TICK,$ACTUAL_TICK;
+	global $db;
+	global $game;
+	global $UNIT_NAME, $UNIT_DESCRIPTION, $UNIT_DATA, $MAX_BUILDING_LVL,$NEXT_TICK,$ACTUAL_TICK;
 
-for ($t=0; $t<10; $t++)
-{
-$_POST['listid_'.$t]=(int)$_POST['listid_'.$t];
-$_POST['listnumber_'.$t]=(int)$_POST['listnumber_'.$t];
-$_POST['listendless_'.$t]=(int)$_POST['listendless_'.$t];
-if ($_POST['listid_'.$t]==-1) {$_POST['listnumber_'.$t]=$_POST['listendless_'.$t]=0;}
+		var_dump($_POST);
+	for ($t=0; $t<10; $t++)
+	{
+		$_POST['listid_'.$t]=(int)$_POST['listid_'.$t];
+		$_POST['listnumber_'.$t]=(int)$_POST['listnumber_'.$t];
+		$_POST['listendless_'.$t]=(int)$_POST['listendless_'.$t];
+		if ($_POST['listid_'.$t]==-1) 
+		{
+			$_POST['listnumber_'.$t]=$_POST['listendless_'.$t]=0;
+		}
 
-$db->query('UPDATE planets SET
-unittrainid_'.($t+1).'="'.$_POST['listid_'.$t].'",
-unittrainnumber_'.($t+1).'="'.$_POST['listnumber_'.$t].'",
-unittrainnumberleft_'.($t+1).'="'.$_POST['listnumber_'.$t].'",
-unittrainendless_'.($t+1).'="'.$_POST['listendless_'.$t].'"
-WHERE planet_id="'.$game->planet['planet_id'].'" LIMIT 1');
+		$db->query('UPDATE planets SET
+					unittrainid_'.($t+1).'="'.$_POST['listid_'.$t].'",
+					unittrainnumber_'.($t+1).'="'.$_POST['listnumber_'.$t].'",
+					unittrainnumberleft_'.($t+1).'="'.$_POST['listnumber_'.$t].'",
+					unittrainendless_'.($t+1).'="'.$_POST['listendless_'.$t].'"
+					WHERE planet_id="'.$game->planet['planet_id'].'" LIMIT 1');
+	}
+	
+	Stop_Train();
+	redirect('a=academy&start_list=1');
 }
-Stop_Train();
-redirect('a=academy&start_list=1');
-}
-
-
 
 function Apply_Template()
 {
@@ -387,7 +390,7 @@ for ($t=0; $t<10; $t++)
 {
 if ($game->planet['unittrain_actual']!=($t+1)) $game->out('<tr><td>&nbsp;</td><td width=40>'.($t+1).':</td>');
 else $game->out('<tr><td><img src="'.$game->PLAIN_GFX_PATH.'arrow_right.png"></td><td width=40><b><u>'.($t+1).'</u></b>:</td>');
-$game->out('<td width=150><select name="listid_'.$t.'" class="Select" size="1"><option value="-1">'.(constant($game->sprache("Text25"))).'</option>');
+$game->out('<td width=150><select name="listid_'.$t.'" class="Select" size="1"><option value="0">'.(constant($game->sprache("Text25"))).'</option>');
 if ($game->planet['unittrainid_'.($t+1)]==10) $game->out(constant($game->sprache("Text17")));
 else $game->out(constant($game->sprache("Text18")));
 if ($game->planet['unittrainid_'.($t+1)]==11) $game->out(constant($game->sprache("Text31")));

@@ -300,8 +300,15 @@ if(isset($_GET['pfleet_details'])) {
     $ship_torso[12] = constant($game->sprache("TEXT87"));
 
     while($s_ship = $db->fetchrow($q_ships)) {
-        $ammo_ratio = (int)($s_ship['torp']*100/$s_ship['max_torp']);
-        /* 07/04/08 - AC: If present, show also ship's name */
+        if($s_ship['max_torp']==0)
+		{
+			$ammo_ratio = 100;
+		}
+		else
+		{
+			$ammo_ratio = (int)($s_ship['torp']*100/$s_ship['max_torp']);
+		}
+        /* 07/04/08 - AC: If present, show also ship's name */		
         $new_id = $s_ship['max_hitpoints']-$s_ship['hitpoints'] + (($s_ship['ship_torso'] > 2 && $ammo_ratio < $thereshold_ammo_ratio) ? 100000 : 0);
         $ships_option_html .= '<option id="'.$new_id.'" value="'.$s_ship['ship_id'].'">'.(($s_ship['ship_name'] != '')? $s_ship['ship_name'].' - '.$s_ship['template_name'] : $s_ship['template_name']).' ('.$s_ship['hitpoints'].'/'.$s_ship['max_hitpoints'].', Torp: '.($s_ship['ship_torso'] < 3 ? 'n/a' : $s_ship['torp']).', Exp: '.$s_ship['experience'].', AT: '.($s_ship['awayteam'] == 0 ? 'OnDuty' : intval($s_ship['awayteam'])).')</option>';
 
@@ -391,13 +398,15 @@ if(isset($_GET['pfleet_details'])) {
     // Anfang lesen Homebase Koords
 
     $planet_id = $fleet['homebase'];
+	
+	if($planet_id != 0)
+	{	
+		$sql = 'SELECT * FROM planets WHERE planet_id = '.$planet_id;
 
-    $sql = 'SELECT * FROM planets WHERE planet_id = '.$planet_id;
+		$planet_koords = $db->queryrow($sql);
 
-    $planet_koords = $db->queryrow($sql);
-
-    $system=$db->queryrow('SELECT system_x, system_y FROM starsystems WHERE system_id = '.$planet_koords['system_id']);
-
+		$system=$db->queryrow('SELECT system_x, system_y FROM starsystems WHERE system_id = '.$planet_koords['system_id']);
+	}
     // Ende lesen Homebasekoords
 
 
@@ -756,7 +765,14 @@ elseif(isset($_GET['mfleet_details'])) {
     $ship_torso[12] = constant($game->sprache("TEXT87"));
 
     while($s_ship = $db->fetchrow($q_ships)) {
-        $ammo_ratio = (int)($s_ship['torp']*100/$s_ship['max_torp']);
+		if($s_ship['max_torp'] == 0)
+		{
+			$ammo_ratio = 100;
+		}
+		else
+		{
+        	$ammo_ratio = (int)($s_ship['torp']*100/$s_ship['max_torp']);
+		}
         /* 07/04/08 - AC: If present, show also ship's name */
         $new_id = $s_ship['max_hitpoints']-$s_ship['hitpoints'] + (($s_ship['ship_torso'] > 2 && $ammo_ratio < $thereshold_ammo_ratio) ? 100000 : 0);
         $ships_option_html .= '<option id="'.$new_id.'" value="'.$s_ship['ship_id'].'">'.(($s_ship['ship_name'] != '')? $s_ship['ship_name'].' - '.$s_ship['template_name'] : $s_ship['template_name']).' ('.$s_ship['hitpoints'].'/'.$s_ship['max_hitpoints'].', Torp: '.($s_ship['ship_torso'] < 3 ? 'n/a' : $s_ship['torp']).', Exp: '.$s_ship['experience'].', AT: '.($s_ship['awayteam'] == 0 ? 'OnDuty' : intval($s_ship['awayteam'])).')</option>';
@@ -820,13 +836,14 @@ elseif(isset($_GET['mfleet_details'])) {
     // Anfang lesen Homebase Koords
 
     $planet_id = $fleet['homebase'];
+	if ($planet_id != 0)
+	{
+    	$sql = 'SELECT * FROM planets WHERE planet_id = '.$planet_id;
 
-    $sql = 'SELECT * FROM planets WHERE planet_id = '.$planet_id;
+    	$planet_koords = $db->queryrow($sql);
 
-    $planet_koords = $db->queryrow($sql);
-
-    $system=$db->queryrow('SELECT system_x, system_y FROM starsystems WHERE system_id = '.$planet_koords['system_id']);
-
+   		$system=$db->queryrow('SELECT system_x, system_y FROM starsystems WHERE system_id = '.$planet_koords['system_id']);
+	}
     // Ende lesen Homebasekoords
 
     $game->out('

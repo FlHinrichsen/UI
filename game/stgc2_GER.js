@@ -66,8 +66,8 @@
       else {
           if ( type == 1 ) document.getElementById( timer ).firstChild.nodeValue= "Fertiggestellt";
           else if ( type == 2 ) document.getElementById( timer ).firstChild.nodeValue= "0:00:00";
-          else if ( type == 3 ) window.setTimeout( 'timer( "'+timer+'", "180", "'+type+'" )', 1000 );
-          else if ( type == 4 ) window.setTimeout( 'timer( "'+timer+'", "180", "'+type+'" )', 1000 );
+          else if ( type == 3 ) window.setTimeout( 'timer( "'+timer+'", "60", "'+type+'" )', 1000 );
+          else if ( type == 4 ) window.setTimeout( 'timer( "'+timer+'", "60", "'+type+'" )', 1000 );
           else if ( type == 5 ) document.getElementById( timer ).firstChild.nodeValue= "Fertig";
       }
   }

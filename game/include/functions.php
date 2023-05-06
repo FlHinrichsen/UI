@@ -266,7 +266,7 @@ function display_view_navigation($module, $current_view, $views) {
 function HelpPopup($name) {
 	global $game;
 
-	return '[<a href="JavaScript:void(window.open(\'help/'.$name.'.htm\',\'STGC\',\'toolbar=no,width=600,height=400,resizable=no,scrollbars=yes\'));">'.constant($game->sprache("HELP")).'</a>]';
+	return '[<a href="JavaScript:void(window.open(\'help/'.$name.'.htm.'.$game->player['language'].'\',\'STGC\',\'toolbar=no,width=600,height=400,resizable=no,scrollbars=yes\'));">'.constant($game->sprache("HELP")).'</a>]';
 }
 
 // #############################################################################
@@ -1059,7 +1059,7 @@ class game {
 
 	var $uid_cache = array();
 
-	function game() {
+	function __construct() {
 		$this->TIME = time();
 
 		$this->sectors_per_quadrant     = $this->quadrant_map_split * $this->quadrant_map_split;

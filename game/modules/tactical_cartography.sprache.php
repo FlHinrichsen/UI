@@ -36,6 +36,8 @@ define ("GER_TEXT4a", 'Bekannte Systeme');
 
 define ("GER_TEXT5", 'Sensoren');
 
+define ("GER_TEXT5a", 'Forschung');
+
 define ("GER_TEXT6", 'Was willst du eigentlich?');
 
 define ("GER_TEXT7", 'Memo-Speicherplatz');

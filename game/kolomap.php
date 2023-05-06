@@ -26,20 +26,28 @@ include_once('include/global.php');
 include_once('include/sql.php');
 include_once('include/functions.php');
 include_once('maps.php');
-error_reporting(E_ALL);
+
 $count=0;
-if (($handle = @fopen ('mapcounter.txt', "rt"))!=true) {}
-else
+if (($handle = @fopen ('mapcounter.txt', "rt"))!=true) 
 {
-$count = fread($handle, filesize('mapcounter.txt'));
-fclose($handle);
+	
 }
-$count=(int)$count+1;
-if (($handle = @fopen ('mapcounter.txt', "wt"))!=true) {}
 else
 {
-fwrite($handle, $count);
-fclose($handle);
+	$count = fread($handle, filesize('mapcounter.txt'));
+	fclose($handle);
+}
+
+$count=(int)$count+1;
+
+if (($handle = @fopen ('mapcounter.txt', "wt"))!=true) 
+{
+	
+}
+else
+{
+	fwrite($handle, $count);
+	fclose($handle);
 }
 
 // create sql-object for db-connection
@@ -118,129 +126,112 @@ switch($game->player['language'])
 // Generate new picture?: 
 if (($handle = @fopen ($image_url, "rb"))!=true)
 {
+	$map_data='<map name="detail_map">';
 
-$map_data='<map name="detail_map">';
+	$im = imagecreatetruecolor(162*$size, 162*$size);
+	imagecolorallocatealpha($im, 0, 0, 0,0);
+	$color[1]=imagecolorallocatealpha($im, 90, 64, 64,0);
+	$color[2]=imagecolorallocatealpha($im, 128, 64, 64,0);
+	$color[3]=imagecolorallocatealpha($im, 196, 64, 64,0);
+	$color[4]=imagecolorallocatealpha($im, 96, 96, 96,0);
+	$color[5]=imagecolorallocatealpha($im, 255, 0, 0,20);
 
-$im = imagecreatetruecolor(162*$size, 162*$size);
-imagecolorallocatealpha($im, 0, 0, 0,0);
-$color[1]=imagecolorallocatealpha($im, 90, 64, 64,0);
-$color[2]=imagecolorallocatealpha($im, 128, 64, 64,0);
-$color[3]=imagecolorallocatealpha($im, 196, 64, 64,0);
-$color[4]=imagecolorallocatealpha($im, 96, 96, 96,0);
-$color[5]=imagecolorallocatealpha($im, 255, 0, 0,20);
+	drawMapGrid($im,$size);
 
-drawMapGrid($im,$size);
+	$sql = 'SELECT s.system_id, s.system_name, s.sector_id, s.system_x, s.system_y FROM starsystems s';
+	if(!$q_systems = $db->query($sql)) 
+	{
+		message(DATABASE_ERROR, 'Could not query starsystems data');
+    }
+	while($system = $db->fetchrow($q_systems))
+	{
+		$glob_systems[$system['system_id']]=$system;
+	}
+
+	$q_planets = $db->query('SELECT system_id FROM planets WHERE planet_owner=0 GROUP BY system_id');
+
+	while($planet = $db->fetchrow($q_planets)) 
+	{
+		$system=$glob_systems[$planet['system_id']];
+		$px = getSystemCoords($system,$size);
+		$px_x = $px[0];
+		$px_y = $px[1];
+
+		if ($size>2)
+		{
+			imagefilledrectangle ($im, $px_x,$px_y, $px_x+$size-2, $px_y+$size-2, $color[5]);
+			$map_data.='<area href="index.php?a=tactical_cartography&system_id='.encode_system_id($system['system_id']).'" target=_mapshow shape="rect" coords="'.$px_x.','.$px_y.', '.($px_x+$size-2).', '.($px_y+$size-2).'" title="'.$system['system_name'].'">';
+		}
+		else
+		{
+			imagefilledrectangle ($im, $px_x-1,$px_y-1, $px_x+$size-2, $px_y+$size-2, $color[5]);
+			$map_data.='<area href="index.php?a=tactical_cartography&system_id='.encode_system_id($system['system_id']).'" target=_mapshow shape="rect" coords="'.($px_x-1).','.($px_y-1).', '.($px_x+$size-2).', '.($px_y+$size-2).'" title="'.$system['system_name'].'">';
+		}
+	};
+
+	if ($size<3) $size2=1;
+	if ($size==3) $size2=2;
+	else $size2=$size-2;
+
+	if ($size>1)
+	{
+		imagestring ($im, $size2,15,162*$size-12-$size,$created.date('d.m.y H:i', time()), $color[4]);
+	}
+	else
+	{
+		imagestring ($im, $size2,5,162*$size-15,$created, $color[4]);
+		imagestring ($im, $size2,5,162*$size-8,date('d.m.y H:i', time()), $color[4]);
+	}
 
 
+	$map_data.='</map>';
 
-$sql = '
-SELECT s.system_id, s.system_name, s.sector_id, s.system_x, s.system_y
- FROM starsystems s';
-  if(!$q_systems = $db->query($sql)) {
+	imagepng($im,$image_url);
 
-            message(DATABASE_ERROR, 'Could not query starsystems data');
-
-        }
-while($system = $db->fetchrow($q_systems))
-$glob_systems[$system['system_id']]=$system;
-
-
-
-$q_planets = $db->query('SELECT system_id FROM planets WHERE planet_owner=0 GROUP BY system_id');
-
-while($planet = $db->fetchrow($q_planets)) {
-$system=$glob_systems[$planet['system_id']];
-$px = getSystemCoords($system,$size);
-$px_x = $px[0];
-$px_y = $px[1];
-
-if ($size>2)
-{
-imagefilledrectangle ($im, $px_x,$px_y, $px_x+$size-2, $px_y+$size-2, $color[5]);
-$map_data.='<area href="index.php?a=tactical_cartography&system_id='.encode_system_id($system['system_id']).'" target=_mapshow shape="rect" coords="'.$px_x.','.$px_y.', '.($px_x+$size-2).', '.($px_y+$size-2).'" title="'.$system['system_name'].'">
-';
-
+	if (($handle = fopen ($map_url, "wt")))
+	{
+		fwrite($handle,$map_data);
+		fclose($handle);
+	}
 }
-else
-{
-imagefilledrectangle ($im, $px_x-1,$px_y-1, $px_x+$size-2, $px_y+$size-2, $color[5]);
-$map_data.='<area href="index.php?a=tactical_cartography&system_id='.encode_system_id($system['system_id']).'" target=_mapshow shape="rect" coords="'.($px_x-1).','.($px_y-1).', '.($px_x+$size-2).', '.($px_y+$size-2).'" title="'.$system['system_name'].'">
-';
-}
-};
-
-
-if ($size<3) $size2=1;
-if ($size==3) $size2=2;
-else $size2=$size-2;
-
-if ($size>1)
-{
-imagestring ($im, $size2,15,162*$size-12-$size,$created.date('d.m.y H:i', time()), $color[4]);
-}
-else
-{
-imagestring ($im, $size2,5,162*$size-15,$created, $color[4]);
-imagestring ($im, $size2,5,162*$size-8,date('d.m.y H:i', time()), $color[4]);
-}
-
-
-$map_data.='</map>';
-
-imagepng($im,$image_url);
-
-if (($handle = @fopen ($map_url, "wt")))
-{
-	fwrite($handle,$map_data);
-}
-fclose($handle);
-
-}
-
-
-
-
 
 if (!isset($_GET['map']))
 {
 
-header("Content-type: image/png");
-header("Pragma: no-cache");
+	header("Content-type: image/png");
+	header("Pragma: no-cache");
 
-if (($handle = @fopen ($image_url, "rb"))!=true) echo 'Lost image!';
+	if (($handle = fopen ($image_url, "rb"))!=true)
+	{ 
+		echo 'Lost image!';
+	}
+	else
+	{
+		$img = fread($handle, filesize($image_url));
+		fclose($handle);
+	}
+
+	// Print image to web browser.
+	print $img;
+}
 else
 {
-$img = fread($handle, filesize($image_url));
-fclose($handle);
-}
-// Print image to web browser.
-print $img;
+	if (!isset($map_data))
+	{
+		if (($handle = fopen ($map_url, "rt"))!=true) 
+		{
+			
+		}
+		else
+		{
+			$map_data = fread($handle, filesize($map_url));
+			fclose($handle);
+		}
+	}
 
-}
-else
-{
-if (!isset($map_data))
-{
-
-if (($handle = @fopen ($map_url, "rt"))!=true) {}
-else
-{
-$map_data = fread($handle, filesize($map_url));
-fclose($handle);
-}
-
-}
-
-echo'<html><body bgcolor="#000000" text="#DDDDDD"  background="../gfx/bg_stars1.gif"><center>
-<span style="font-family: Verdana; font-size: 15px;"><b>'.$title.'</b></span><br>
-<img border=0 usemap="#detail_map" src="'.$image_url.'" >
-
-'.$map_data.'
-
-</body></html>';
-
-
-
+	echo	'<html><body bgcolor="#000000" text="#DDDDDD"  background="../gfx/bg_stars1.gif"><center>
+			<span style="font-family: Verdana; font-size: 15px;"><b>'.$title.'</b></span><br>
+			<img border=0 usemap="#detail_map" src="'.$image_url.'" >'.$map_data.'</body></html>';
 }
 
 $db->close();

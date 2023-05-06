@@ -28,9 +28,9 @@ include('include/static/static_components.php');
 $filename = 'include/static/static_components_'.$game->player['language'].'.php';
 if (file_exists($filename)) include($filename);
 
+set_time_limit(100);
 
-ini_set ('error_reporting', E_ALL);
-    $STRADE_MODULES = array(
+$STRADE_MODULES = array(
 	'main' => constant($game->sprache("TEXT0")), // Show_Main
 	'status_offer' => constant($game->sprache("TEXT1")), //Show_Status();
 	'trade_buy_truppen' =>constant($game->sprache("TEXT2")), // Truppenhandel kaufen Trade_Buy_truppen
@@ -48,93 +48,90 @@ ini_set ('error_reporting', E_ALL);
 
 function CreateShipInfoText($ship)
 {
-global $db;
-global $game;
-$text='<b>'.$ship[31].'</b><br><br><u>'.constant($game->sprache("TEXT12")).'</u><br>';
+	global $db;
+	global $game;
+	$text='<b>'.$ship[31].'</b><br><br><u>'.constant($game->sprache("TEXT12")).'</u><br>';
 
-$text.=constant($game->sprache("TEXT13")).' '.$ship[14].'<br>';
-$text.=constant($game->sprache("TEXT14")).' '.$ship[15].'<br>';
-$text.=constant($game->sprache("TEXT15")).' '.$ship[16].'<br>';
-$text.=constant($game->sprache("TEXT16")).' '.$ship[17].'<br>';
-$text.=constant($game->sprache("TEXT17")).' '.$ship[18].'<br>';
-$text.=constant($game->sprache("TEXT18")).' '.$ship[19].'<br>';
-$text.=constant($game->sprache("TEXT19")).' '.$ship[20].'<br>';
-$text.=constant($game->sprache("TEXT20")).' '.$ship[21].'<br>';
-$text.=constant($game->sprache("TEXT21")).' '.$ship[22].'<br>';
-$text.=constant($game->sprache("TEXT22")).' '.$ship[23].'<br>';
-$text.=constant($game->sprache("TEXT23")).' '.$ship[24].'<br>';
-$text.=constant($game->sprache("TEXT24")).' '.$ship[25].'<br>';
-$text.=constant($game->sprache("TEXT25")).' '.$ship[27].'<br>';
-$text.=constant($game->sprache("TEXT26")).' '.$ship[26].'<br>';
+	$text.=constant($game->sprache("TEXT13")).' '.$ship[14].'<br>';
+	$text.=constant($game->sprache("TEXT14")).' '.$ship[15].'<br>';
+	$text.=constant($game->sprache("TEXT15")).' '.$ship[16].'<br>';
+	$text.=constant($game->sprache("TEXT16")).' '.$ship[17].'<br>';
+	$text.=constant($game->sprache("TEXT17")).' '.$ship[18].'<br>';
+	$text.=constant($game->sprache("TEXT18")).' '.$ship[19].'<br>';
+	$text.=constant($game->sprache("TEXT19")).' '.$ship[20].'<br>';
+	$text.=constant($game->sprache("TEXT20")).' '.$ship[21].'<br>';
+	$text.=constant($game->sprache("TEXT21")).' '.$ship[22].'<br>';
+	$text.=constant($game->sprache("TEXT22")).' '.$ship[23].'<br>';
+	$text.=constant($game->sprache("TEXT23")).' '.$ship[24].'<br>';
+	$text.=constant($game->sprache("TEXT24")).' '.$ship[25].'<br>';
+	$text.=constant($game->sprache("TEXT25")).' '.$ship[27].'<br>';
+	$text.=constant($game->sprache("TEXT26")).' '.$ship[26].'<br>';
 
 
-return $text;
+	return $text;
 }
-
-
-
 
 function CreateRealShipInfoText($ship_data)
 {
-global $db;
-global $game,$SHIPIMAGE_PATH;
-$text='<font color=#000000><table widht=500 border=0 cellpadding=0 cellspacing=0><tr><td width=250><table width=* border=0 cellpadding=0 cellspacing=0><tr><td valign=top><u>'.constant($game->sprache("TEXT30")).'</u><br><b>'.$ship_data['name'].'</b><br><br></td></tr><tr><td valign=top><u>'.constant($game->sprache("TEXT31")).'</u><br>'.str_replace("\r\n", '<br>',wordwrap($ship_data['description'], 40,"<br>",1 )).'<br><br></td></tr><tr><td valign=top><u>'.constant($game->sprache("TEXT32")).'</u><br><img src='.$SHIPIMAGE_PATH.'ship'.$ship_data['owner_race'].'_'.$ship_data['ship_torso'].'.jpg></td></tr><tr><td valign=top><u>'.constant($game->sprache("TEXT27")).'</u><br>';
+	global $db;
+	global $game,$SHIPIMAGE_PATH;
+	$text='<font color=#000000><table widht=500 border=0 cellpadding=0 cellspacing=0><tr><td width=250><table width=* border=0 cellpadding=0 cellspacing=0><tr><td valign=top><u>'.constant($game->sprache("TEXT30")).'</u><br><b>'.$ship_data['name'].'</b><br><br></td></tr><tr><td valign=top><u>'.constant($game->sprache("TEXT31")).'</u><br>'.str_replace("\r\n", '<br>',wordwrap($ship_data['description'], 40,"<br>",1 )).'<br><br></td></tr><tr><td valign=top><u>'.constant($game->sprache("TEXT32")).'</u><br><img src='.$SHIPIMAGE_PATH.'ship'.$ship_data['owner_race'].'_'.$ship_data['ship_torso'].'.jpg></td></tr><tr><td valign=top><u>'.constant($game->sprache("TEXT27")).'</u><br>';
 
 
-for ($t=0; $t<10; $t++)
-{
-	if ($ship['component_'.($t+1)]>=0)
+	for ($t=0; $t<10; $t++)
 	{
-		$text.='-&nbsp;'.$ship_components[$ship['race']][$t][$ship['component_'.($t+1)]]['name'].'<br>';
-	} 
-		else $text.=constant($game->sprache("TEXT33"));
-}
+		if ($ship['component_'.($t+1)]>=0)
+		{
+			$text.='-&nbsp;'.$ship_components[$ship['race']][$t][$ship['component_'.($t+1)]]['name'].'<br>';
+		} 
+			else $text.=constant($game->sprache("TEXT33"));
+	}
 
-$text.='<br></td></tr></table></td><td width=250><table width=* border=0 cellpadding=0 cellspacing=0><tr><td valign=top><u>'.constant($game->sprache("TEXT28")).'</u><br>';
+	$text.='<br></td></tr></table></td><td width=250><table width=* border=0 cellpadding=0 cellspacing=0><tr><td valign=top><u>'.constant($game->sprache("TEXT28")).'</u><br>';
 
-$text.='<u>'.constant($game->sprache("TEXT13")).'</u> <b>'.$ship_data['value_1'].'</b><br>';
-$text.='<u>'.constant($game->sprache("TEXT14")).'</u> <b>'.$ship_data['value_2'].'</b><br>';
-$text.='<u>'.constant($game->sprache("TEXT15")).'</u> <b>'.$ship_data['value_3'].'</b><br>';
-$text.='<u>'.constant($game->sprache("TEXT18")).'</u> <b>'.$ship_data['value_6'].'</b><br>';
-$text.='<u>'.constant($game->sprache("TEXT19")).'</u> <b>'.$ship_data['value_7'].'</b><br>';
-$text.='<u>'.constant($game->sprache("TEXT20")).'</u> <b>'.$ship_data['value_8'].'</b><br>';
-$text.='<u>'.constant($game->sprache("TEXT21")).'</u> <b>'.$ship_data['value_9'].'</b><br>';
-$text.='<u>'.constant($game->sprache("TEXT22")).'</u> <b>'.$ship_data['value_10'].'</b><br>';
-$text.='<u>'.constant($game->sprache("TEXT23")).'</u> <b>'.$ship_data['value_11'].'</b><br>';
-$text.='<u>'.constant($game->sprache("TEXT24")).'</u> <b>'.$ship_data['value_12'].'</b><br>';
-$text.='<u>'.constant($game->sprache("TEXT29")).'</u> <b>'.$ship_data['value_14'].'/'.$ship_data['value_13'].'</b><br><br>';
-$text.='<u>'.constant($game->sprache("TEXT16")).'</u> <b>'.$ship_data['value_4'].'</b><br>';
-$text.='<u>'.constant($game->sprache("TEXT17")).'</u> <b>'.$ship_data['hitpoints'].'/'.$ship_data['value_5'].'</b><br>';
-$text.='<br></td></tr><tr><td valign=top><u>'.constant($game->sprache("TEXT34")).'</u>:<br><img src='.$game->GFX_PATH.'menu_unit1_small.gif>'.$ship_data['unit_1'].'&nbsp;&nbsp;<img src='.$game->GFX_PATH.'menu_unit2_small.gif>'.$ship_data['unit_2'].'&nbsp;&nbsp;<img src='.$game->GFX_PATH.'menu_unit3_small.gif>'.$ship_data['unit_3'].'&nbsp;&nbsp;<img src='.$game->GFX_PATH.'menu_unit4_small.gif>'.$ship_data['unit_4'].'&nbsp;&nbsp;<img src='.$game->GFX_PATH.'menu_unit5_small.gif>'.$ship_data['unit_5'].'&nbsp;&nbsp;<img src='.$game->GFX_PATH.'menu_unit6_small.gif>'.$ship_data['unit_6'].'<br></td></tr></table></td></tr></table>';
-$text.='</td></tr></table></td></tr></table><br></font>';
+	$text.='<u>'.constant($game->sprache("TEXT13")).'</u> <b>'.$ship_data['value_1'].'</b><br>';
+	$text.='<u>'.constant($game->sprache("TEXT14")).'</u> <b>'.$ship_data['value_2'].'</b><br>';
+	$text.='<u>'.constant($game->sprache("TEXT15")).'</u> <b>'.$ship_data['value_3'].'</b><br>';
+	$text.='<u>'.constant($game->sprache("TEXT18")).'</u> <b>'.$ship_data['value_6'].'</b><br>';
+	$text.='<u>'.constant($game->sprache("TEXT19")).'</u> <b>'.$ship_data['value_7'].'</b><br>';
+	$text.='<u>'.constant($game->sprache("TEXT20")).'</u> <b>'.$ship_data['value_8'].'</b><br>';
+	$text.='<u>'.constant($game->sprache("TEXT21")).'</u> <b>'.$ship_data['value_9'].'</b><br>';
+	$text.='<u>'.constant($game->sprache("TEXT22")).'</u> <b>'.$ship_data['value_10'].'</b><br>';
+	$text.='<u>'.constant($game->sprache("TEXT23")).'</u> <b>'.$ship_data['value_11'].'</b><br>';
+	$text.='<u>'.constant($game->sprache("TEXT24")).'</u> <b>'.$ship_data['value_12'].'</b><br>';
+	$text.='<u>'.constant($game->sprache("TEXT29")).'</u> <b>'.$ship_data['value_14'].'/'.$ship_data['value_13'].'</b><br><br>';
+	$text.='<u>'.constant($game->sprache("TEXT16")).'</u> <b>'.$ship_data['value_4'].'</b><br>';
+	$text.='<u>'.constant($game->sprache("TEXT17")).'</u> <b>'.$ship_data['hitpoints'].'/'.$ship_data['value_5'].'</b><br>';
+	$text.='<br></td></tr><tr><td valign=top><u>'.constant($game->sprache("TEXT34")).'</u>:<br><img src='.$game->GFX_PATH.'menu_unit1_small.gif>'.$ship_data['unit_1'].'&nbsp;&nbsp;<img src='.$game->GFX_PATH.'menu_unit2_small.gif>'.$ship_data['unit_2'].'&nbsp;&nbsp;<img src='.$game->GFX_PATH.'menu_unit3_small.gif>'.$ship_data['unit_3'].'&nbsp;&nbsp;<img src='.$game->GFX_PATH.'menu_unit4_small.gif>'.$ship_data['unit_4'].'&nbsp;&nbsp;<img src='.$game->GFX_PATH.'menu_unit5_small.gif>'.$ship_data['unit_5'].'&nbsp;&nbsp;<img src='.$game->GFX_PATH.'menu_unit6_small.gif>'.$ship_data['unit_6'].'<br></td></tr></table></td></tr></table>';
+	$text.='</td></tr></table></td></tr></table><br></font>';
 
-$text=str_replace("'",'',$text);
-$text=str_replace('"','',$text);
-return $text;
+	$text=str_replace("'",'',$text);
+	$text=str_replace('"','',$text);
+	return $text;
 }
 
 
 function CreateCompInfoText($comp)
 {
-global $db;
-global $game;
-$text=''.$comp['description'].'<br><br>'.constant($game->sprache("TEXT12")).'</u><br>';
+	global $db;
+	global $game;
+	$text=''.$comp['description'].'<br><br>'.constant($game->sprache("TEXT12")).'</u><br>';
 
-if ($comp['value_1']!=0) $text.=constant($game->sprache("TEXT13")).' '.$comp['value_1'].'<br>';
-if ($comp['value_2']!=0) $text.=constant($game->sprache("TEXT14")).' '.$comp['value_2'].'<br>';
-if ($comp['value_3']!=0) $text.=constant($game->sprache("TEXT15")).' '.$comp['value_3'].'<br>';
-if ($comp['value_4']!=0) $text.=constant($game->sprache("TEXT16")).' '.$comp['value_4'].'<br>';
-if ($comp['value_5']!=0) $text.=constant($game->sprache("TEXT17")).' '.$comp['value_5'].'<br>';
-if ($comp['value_6']!=0) $text.=constant($game->sprache("TEXT18")).' '.$comp['value_6'].'<br>';
-if ($comp['value_7']!=0) $text.=constant($game->sprache("TEXT19")).' '.$comp['value_7'].'<br>';
-if ($comp['value_8']!=0) $text.=constant($game->sprache("TEXT20")).' '.$comp['value_8'].'<br>';
-if ($comp['value_9']!=0) $text.=constant($game->sprache("TEXT21")).' '.$comp['value_9'].'<br>';
-if ($comp['value_10']!=0) $text.=constant($game->sprache("TEXT22")).' '.$comp['value_10'].'<br>';
-if ($comp['value_11']!=0) $text.=constant($game->sprache("TEXT23")).' '.$comp['value_11'].'<br>';
-if ($comp['value_12']!=0) $text.=constant($game->sprache("TEXT24")).' '.$comp['value_12'].'<br>';
-if ($comp['value_14']!=0) $text.=constant($game->sprache("TEXT25")).' '.$comp['value_14'].'<br>';
-if ($comp['value_13']!=0) $text.=constant($game->sprache("TEXT26")).' '.$comp['value_13'].'<br>';
-return $text;
+	if ($comp['value_1']!=0) $text.=constant($game->sprache("TEXT13")).' '.$comp['value_1'].'<br>';
+	if ($comp['value_2']!=0) $text.=constant($game->sprache("TEXT14")).' '.$comp['value_2'].'<br>';
+	if ($comp['value_3']!=0) $text.=constant($game->sprache("TEXT15")).' '.$comp['value_3'].'<br>';
+	if ($comp['value_4']!=0) $text.=constant($game->sprache("TEXT16")).' '.$comp['value_4'].'<br>';
+	if ($comp['value_5']!=0) $text.=constant($game->sprache("TEXT17")).' '.$comp['value_5'].'<br>';
+	if ($comp['value_6']!=0) $text.=constant($game->sprache("TEXT18")).' '.$comp['value_6'].'<br>';
+	if ($comp['value_7']!=0) $text.=constant($game->sprache("TEXT19")).' '.$comp['value_7'].'<br>';
+	if ($comp['value_8']!=0) $text.=constant($game->sprache("TEXT20")).' '.$comp['value_8'].'<br>';
+	if ($comp['value_9']!=0) $text.=constant($game->sprache("TEXT21")).' '.$comp['value_9'].'<br>';
+	if ($comp['value_10']!=0) $text.=constant($game->sprache("TEXT22")).' '.$comp['value_10'].'<br>';
+	if ($comp['value_11']!=0) $text.=constant($game->sprache("TEXT23")).' '.$comp['value_11'].'<br>';
+	if ($comp['value_12']!=0) $text.=constant($game->sprache("TEXT24")).' '.$comp['value_12'].'<br>';
+	if ($comp['value_14']!=0) $text.=constant($game->sprache("TEXT25")).' '.$comp['value_14'].'<br>';
+	if ($comp['value_13']!=0) $text.=constant($game->sprache("TEXT26")).' '.$comp['value_13'].'<br>';
+	return $text;
 }
 
 
@@ -158,27 +155,22 @@ function display_view_navigation_extended($module, $current_view, $views,$break_
     return implode('', $nav_html);
 }
 
-
-set_time_limit(100);
-
 function UnitPrice($unit,$resource, $race=-1)
 {
-global $db;
-global $game;
-global $RACE_DATA, $UNIT_NAME, $UNIT_DATA, $MAX_BUILDING_LVL,$NEXT_TICK,$ACTUAL_TICK;
+	global $db;
+	global $game;
+	global $RACE_DATA, $UNIT_NAME, $UNIT_DATA, $MAX_BUILDING_LVL,$NEXT_TICK,$ACTUAL_TICK;
 
-if ($race=-1) $race=$game->player['user_race'];
-$price = $UNIT_DATA[$unit][$resource];
-$price*= $RACE_DATA[$race][6];
-return round($price,0);
+	if ($race=-1) $race=$game->player['user_race'];
+	$price = $UNIT_DATA[$unit][$resource];
+	$price*= $RACE_DATA[$race][6];
+	return round($price,0);
 }
-
-
 
 function Show_Status()
 {
-global $db;
-global $game, $NEXT_TICK, $ACTUAL_TICK;
+	global $db;
+	global $game, $NEXT_TICK, $ACTUAL_TICK;
 
 	$limit='';
 	if (isset($_REQUEST['active_planet'])) {$limit='AND p.planet_id="'.$game->planet['planet_id'].'"';}
@@ -234,8 +226,8 @@ global $game, $NEXT_TICK, $ACTUAL_TICK;
 			if ($tradedata[$t]['unit_5']>0) $ware.='&nbsp;<img src="'.$game->GFX_PATH.'menu_unit5_small.gif">&nbsp;'.$tradedata[$t]['unit_5'].'&nbsp;';
 			if ($tradedata[$t]['unit_6']>0) $ware.='&nbsp;<img src="'.$game->GFX_PATH.'menu_unit6_small.gif">&nbsp;'.$tradedata[$t]['unit_6'].'&nbsp;';
 
-/* 03/03/08 - AC: Color is not initialized */
-$color = 0;
+			/* 03/03/08 - AC: Color is not initialized */
+			$color = 0;
 			if ($num>5)
 			$game->out('<tr onMouseOver="mOver(this);" onMouseOut="mOut(this);" color:'.$color.';"><a href="javascript:void();"><td><b>'.Zeit(TICK_DURATION*$tradedata[$t]['arrival_time']-TICK_DURATION*$ACTUAL_TICK+round($NEXT_TICK/60,0)).'</b></td><td>'.$ware.'</td><td>'.$tradedata[$t]['planet_name'].'</td></a></tr>');
 			else
@@ -243,16 +235,10 @@ $color = 0;
 
 			$num++;
 		}
-
 	}
 
-
 	$game->out('</table></td></tr></table>');
-
 }
-
-
-
 
 function Show_BidDenied()
 {
@@ -3296,13 +3282,15 @@ function Show_Main_a()
 	{
 		if($db->query('INSERT INTO `trade_settings` ( `user_id` , `handel_notepad` ) VALUES ('.$game->player['user_id'].', "")')==false)
 		{
-		message(DATABASE_ERROR, 'Internal database error');
+			message(DATABASE_ERROR, 'Internal database error');
 		}
 	}
+	
 	if(($trade_settings=$db->query('SELECT * FROM trade_settings WHERE user_id='.$game->player['user_id'].''))==false) 
 	{
 		$game->out('<br><b>ERROR: -Bitte einem Admin melden - deine Trade Settings konnten nicht geladen werden</b><br>');
-	}else
+	}
+	else
 	{
 		$settings=$db->queryrow('SELECT * FROM trade_settings WHERE user_id='.$game->player['user_id']);
 
@@ -3331,6 +3319,7 @@ function Show_Main_a()
 				}
 			}
 		}
+		
 		$anzahl_truppen=$db->queryrow('SELECT * FROM `FHB_Handels_Lager` Limit 1');
 
 		// 20/02/08 - AC: Check if data is valid!
@@ -3442,7 +3431,9 @@ function Show_Main_a()
 			$r_tmp = $db->queryrow('SELECT COUNT(id) AS num FROM FHB_handel_log WHERE art=2 AND rasse='.$t);
 			$race['racecount_'.$t]=$r_tmp['num'];
 		}
+		
 		$t_percent = $db->queryrow('SELECT count(*) AS num FROM `FHB_handel_log` WHERE art=2');
+		
 		for ($t=0; $t<12; $t++)
 		{
 			// 20/02/08 - AC: Check if data is valid!
@@ -3451,6 +3442,7 @@ function Show_Main_a()
 
 			$race['racepercent_'.$t]=round(100/($t_percent['num'])*$race['racecount_'.$t],0);
 		}
+		
 		$game->out('<br>'.constant($game->sprache("TEXT222")).'<table width="150px" border="0" cellpadding="0" cellspacing="0">
 			<tr>
 			<td width="130" class="desc_row">'.$RACE_DATA[0][0].':</td>
@@ -3497,7 +3489,9 @@ function Show_Main_a()
 		if(($user_auktionen_offen=$db->query('SELECT st.auktions_id,st.timestep FROM (schulden_table st) WHERE st.status=0 AND st.user_ver='.$game->player['user_id'].''))==false)
 		{
 			message(DATABASE_ERROR, 'Could not open auktions table list');
-		}else{
+		}
+		else
+		{
 			$game->out('<table><tr><td>'.constant($game->sprache("TEXT223")).'</td></tr>');
 			$zeahler_open=0;
 			while($user_auk_open=$db->fetchrow($user_auktionen_offen))
@@ -3519,7 +3513,6 @@ function Show_Main_a()
 		}
 		//$game->out('<tr><td>'.constant($game->sprache("TEXT274")).'</td></tr></table><br>');
 		$game->out('</table><br>');
-
 
 		$game->out('</td></tr></table><br><center> '.constant($game->sprache("TEXT231")).'
 			<form method="post" action="'.parse_link('a=trade&view='.(isset($_REQUEST['view'])?$_REQUEST['view']:'').'&note=sichern').'" target="_blank">
@@ -4571,9 +4564,14 @@ if ($game->planet['building_11']<1)
 else
 {
 	if ($game->player['trade_tick']>0)
+	{
 		$game->player['deny_trade']=1;
+	}
 	else
+	{
 		$game->player['deny_trade']=0;
+	}
+	
 	$sub_action = (!empty($_GET['view'])) ? $_GET['view'] : 'main';
 	$game->out('<span class="sub_caption">'.constant($game->sprache("TEXT260")).'</span><br><b>'.constant($game->sprache("TEXT261")).'</b><br>'.display_view_navigation_extended('trade', $sub_action, $STRADE_MODULES,1));
 	$game->out('<table border="0" cellpadding="2" cellspacing="2" class="style_outer" width="90%" align="center"><tr><td>');
@@ -4718,6 +4716,7 @@ else
 	{
 		Show_Main_a();
 	}
+	
 	$game->out('</td></tr></table>');
 	$game->out('</td></tr></table>');
 }

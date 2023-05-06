@@ -106,7 +106,7 @@ define ("GER_TEXT42",'Unbekannt');
 
 define ("GER_TEXT43", 'unabh&auml;ngige Kolonien:');
 
-define ("ENG_TEXT44", 'Namen');
+define ("GER_TEXT44", 'Namen');
 
 define ("GER_TEXT45", 'Position');
 

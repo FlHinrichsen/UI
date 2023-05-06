@@ -51,10 +51,13 @@ if (isset($_GET['fleets_sensors']))
             WHERE user_id = '.$game->player['user_id'].' AND
                   move_id = 0';
 
-    if(!$q_fleets = $db->query($sql)) {
+    if(!$q_fleets = $db->query($sql)) 
+	{
         message(DATABASE_ERROR, 'Could not query moves fleets data!');
     }
-
+	
+	$fleet_ids = array();
+	
     while($_fl = $db->fetchrow($q_fleets)) {
         $fleet_ids[$_fl['planet_id']] = $_fl['fleet_id'];
         $fleet_planets[] = $_fl['planet_id'];

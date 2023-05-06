@@ -20,8 +20,6 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-error_reporting(E_ERROR);
-
 
 function format_filesize($value, $limes = 6, $comma = 0) {
     $byte_units   = array('Byte', 'KB', 'MB');
@@ -92,10 +90,6 @@ function format_filesize($value, $limes = 6, $comma = 0) {
     return $results;
   }
 
-
-
-
-
   function memory () {
     if ($fd = fopen('/proc/meminfo', 'r')) {
       $results['ram'] = array();
@@ -121,12 +115,13 @@ function format_filesize($value, $limes = 6, $comma = 0) {
       $results['ram']['used'] = $results['ram']['total'] - $results['ram']['free'];
       $results['swap']['used'] = $results['swap']['total'] - $results['swap']['free'];
       fclose($fd);
-      $swaps = file ('/proc/swaps');
+      $swaps = file_get_contents ('/proc/swaps');
       //$swapdevs = split("\n", $swaps);
-     $swapdevs = explode("\n", $swaps);
+      $swapdevs = explode("\n", $swaps);
 
-      for ($i = 1; $i < (sizeof($swapdevs) - 1); $i++) {
-        $ar_buf = preg_split('/\s+/', $swapdevs[$i], 6);
+      for ($i = 1; $i < (sizeof($swapdevs) - 1); $i++) 
+	  {
+		$ar_buf = preg_split('/\s+/', $swapdevs[$i], 6);
 
         $results['devswap'][$i - 1] = array();
         $results['devswap'][$i - 1]['dev'] = $ar_buf[0];
@@ -135,13 +130,23 @@ function format_filesize($value, $limes = 6, $comma = 0) {
         $results['devswap'][$i - 1]['free'] = ($results['devswap'][$i - 1]['total'] - $results['devswap'][$i - 1]['used']);
         $results['devswap'][$i - 1]['percent'] = round(($ar_buf[3] * 100) / $ar_buf[2]);
       } 
+	  
       // I don't like this since buffers and cache really aren't
       // 'used' per say, but I get too many emails about it.
       $results['ram']['t_used'] = $results['ram']['used'];
       $results['ram']['t_free'] = $results['ram']['total'] - $results['ram']['t_used'];
       $results['ram']['percent'] = round(($results['ram']['t_used'] * 100) / $results['ram']['total']);
-      $results['swap']['percent'] = round(($results['swap']['used'] * 100) / $results['swap']['total']);
-    } else {
+	  if ($results['swap']['total'] != 0)
+	  {
+		$results['swap']['percent'] = round(($results['swap']['used'] * 100) / $results['swap']['total']);
+	  }
+	  else
+	  {
+		$results['swap']['percent'] = 100;
+	  }		
+    } 
+	else 
+	{
       $results['ram'] = array();
       $results['swap'] = array();
       $results['devswap'] = array();
@@ -149,13 +154,17 @@ function format_filesize($value, $limes = 6, $comma = 0) {
     return $results;
   } 
 
-  function cpu () {
-    if($fd = fopen('/proc/cpuinfo', 'r')) {
+  function cpu () 
+  {
+    if($fd = fopen('/proc/cpuinfo', 'r')) 
+	{
       $results = array();
       $results['cores'] = 0;
 
-      while($buf = fgets($fd, 512)) {
-        if(stristr($buf,"model name")) {
+      while($buf = fgets($fd, 512)) 
+	  {
+        if(stristr($buf,"model name")) 
+		{
           strtok($buf,':');
           $results['model'] = strtok(':');
           $results['cores']++;
@@ -191,7 +200,14 @@ $t_percent = $db->queryrow('SELECT COUNT(user_id) AS num FROM user WHERE user_au
 
 for ($t=0; $t<13; $t++)
 {
-    $race['racepercent_'.$t]=round(100/($t_percent['num'])*$race['racecount_'.$t],0);
+	if($t_percent['num'] != 0)
+	{
+		$race['racepercent_'.$t] = round(100/($t_percent['num'])*$race['racecount_'.$t],0);
+	}
+	else
+	{
+		$race['racepercent_'.$t] = 0;
+	}
 }
 
 for ($t=0; $t<13; $t++)
@@ -203,8 +219,16 @@ for ($t=0; $t<13; $t++)
 $p_percent = $db->queryrow('SELECT COUNT(planet_id) AS num FROM planets, user WHERE planet_owner <> 0 AND planets.planet_owner = user.user_id AND user.user_auth_level = 1');
 
 for ($t=0; $t<13; $t++)
-{
-    $planet['planetpercent_'.$t]=round(100/($p_percent['num'])*$planet['planetcount_'.$t],0);
+{	
+	if($t_percent['num'] != 0)
+	{
+		$planet['planetpercent_'.$t] = round(100/($p_percent['num'])*$planet['planetcount_'.$t],0);
+	}
+	else
+	{
+		$planet['planetpercent_'.$t] = 0;
+	}
+    
 }
 
 

@@ -19,6 +19,30 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+//Germany
+define ("GER_TEXT0", 'Taktische Zentrale:');
+
+define ("GER_TEXT1", 'Stellare Kartographie');
+
+define ("GER_TEXT2", 'Schiffsbewegungen');
+
+define ("GER_TEXT3", 'Spieler Info');
+
+define ("GER_TEXT4", 'Kolonisierung');
+
+define ("GER_TEXT4a", 'Bekannte Systeme');
+
+define ("GER_TEXT5", 'Sensoren');
+
+define ("GER_TEXT5a", 'Forschung');
+
+define ("GER_TEXT6", 'Forschungstypologie');
+
+define ("GER_TEXT7", 'Sektor (Name oder ID 1-196)');
+
+define ("GER_TEXT8", 'System (Name)');
+
+define ("GER_TEXT9", 'Planet (Name)');
 
 //Italiano
 define ("ITA_TEXT0", 'Comando Tattico:');

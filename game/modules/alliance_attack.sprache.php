@@ -53,6 +53,8 @@ define ("GER_TEXT13", 'Opfer');
 
 define ("GER_TEXT14", 'Stationieren');
 
+define ("GER_TEXT15", 'Stationierung');
+
 define ("GER_TEXT16", 'Angreifen');
 
 define ("GER_TEXT17", 'Zur&uuml;ckfliegen');

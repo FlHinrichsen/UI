@@ -34,14 +34,11 @@ define ("GALAXY3_BG", 'gfx/m64bg.jpg');
 
 define('GAME_EXE', 'index.php');
 
+include('config.inc.php');
 include('locale.php');
 include('game/include/global.php');
 include('game/include/sql.php');
 include('game/include/functions.php');
-
-$db_name = '';
-$db_user = '';
-$db_password = '';
 
 error_reporting(E_ALL);
 
@@ -93,6 +90,7 @@ else
     include('pages/'.$action.'.php');
 
 //News
+/*
 $sql = ' SELECT *
          FROM page_news
          ORDER BY date DESC
@@ -121,6 +119,7 @@ else {
         $news_html .= '<span style="font-size: 10px;">'.$date_str.'</span><br><a href="index.php?a=news&show='.$news['id'].'"><b>'.$news['header'].'</b></a><br><br>';
     }
 }
+*/
 //Ende News
 
 ?>

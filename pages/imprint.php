@@ -28,8 +28,8 @@ $main_html='
         </header>
 				<p>
 					<table class="lcars-table scanning lcars-husk-color">
-						<tr><td>Name:</td><td>Tobias Mundinger</td><td></td></tr>
-						<tr><td>Nickname:</td><td>Saboti</td><td></td></tr>
+						<tr><td>Name:</td><td>Florian Hinrichsen</td><td></td></tr>
+						<tr><td>Nickname:</td><td>Nemesis</td><td></td></tr>
 						<tr><td>Kontakt:</td><td><a href="mailto:'.$config['admin_email'].'">E-Mail</a></td><td></td></tr>
 					</table>
 				</p>

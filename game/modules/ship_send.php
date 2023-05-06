@@ -505,7 +505,7 @@ switch($step) {
                     message(NOTICE, constant($game->sprache("TEXT21")));
                 }
 
-                if(explore_fleet == false) {
+                if($explore_fleet == false) {
                     message(NOTICE, constant($game->sprache("TEXT25")));
                 }
 

@@ -140,6 +140,7 @@ while($supporter = $db->fetchrow($qry))
 $rights='Benutzer';
 if ($supporter['user_auth_level']==2) $rights='Support';
 if ($supporter['user_auth_level']==3) $rights='Multihunter';
+if ($supporter['user_auth_level']==4) $rights='Bot';
 
 
 /* Utente rimasto attivo pochissimo dopo ia Dabei seit */

@@ -28,10 +28,10 @@ $main_html='
 				<a href="'.parse_link().'" class="gold">Home</a>
 				<a href="'.parse_link('a=stats').'" class="green">Statistiken</a>
 				<a href="'.parse_link('a=faq').'" class="violet">FAQ(Hilfe)</a>
-				<a href="https://discord.gg/fbzafjkMp4" target="blank">Discord</a>
-				<a href="https://st-gw.de/forum/" target="blank">Forum</a>
+				<!--<a href="https://discord.gg/fbzafjkMp4" target="blank">Discord</a>-->
+				<a href="https://forum.fam-hinrichsen.de" target="blank">Forum</a>
 				<a href="'.parse_link('a=imprint').'" class="almond">Impressum</a>
-				<a href="https://github.com/saboti" target="blank_" class="lilac">Developer</a>
+				<!--<a href="https://github.com/saboti" target="blank_" class="lilac">Developer</a>-->
 			</div>
 ';
 ?>

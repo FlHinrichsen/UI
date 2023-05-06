@@ -98,7 +98,7 @@ define ("GER_TCOMMANDERS", 'Kommander');
 
 define ("GER_TTECHNICIANS", 'Techniker');
 
-define ("GER_T_PHYSICIANS", 'Mediziner');
+define ("GER_TPHYSICIANS", 'Mediziner');
 
 define ("GER_TWORKERS", 'Bev&ouml;lkerung');
 

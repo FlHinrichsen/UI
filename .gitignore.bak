@@ -10,6 +10,4 @@ game/logs/daily.log
 game/mapcounter.txt
 game/maps/images/galaxy_detail.png
 game/maps/images/galaxy_detail_small.png
-game/kurs/*.png
-game/maps/images/galaxy_detail_small.png
-game/maps/images/galaxy_detail.png
+game/kurs/unit_1.png

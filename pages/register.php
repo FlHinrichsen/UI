@@ -400,12 +400,12 @@ if(isset($_POST['submit'])) {
     }
 
     $activation_key = md5( pow($user_id,2) );
-    $activation_link = 'https://st-gw.de/index.php?a=activate&galaxy='.$galaxy.'&user_id='.$user_id.'&key='.$activation_key;
+    $activation_link = 'https://stgc.fam-hinrichsen.de/index.php?a=activate&galaxy='.$galaxy.'&user_id='.$user_id.'&key='.$activation_key;
     $mail_message  = $locale['mail_message_congrats'].' '.$_POST['user_name'].'!'.NL;
     $mail_message .= $locale['mail_message_reg1a'].' '.$galaxyname.' '.$locale['mail_message_reg1b'].NL;
     $mail_message .= $locale['mail_message_reg2'].NL.$activation_link."\n\n".$locale['mail_message_reg3'].NL;
     $mail_message .= $locale['mail_message_reg4'].NL.NL.$locale['mail_message_sig_line1'].NL;
-    $mail_message .= $locale['mail_message_sig_line2'].NL.NL.'Impressum: https://st-gw.de/index.php?a=imprint';
+    $mail_message .= $locale['mail_message_sig_line2'].NL.NL.'Impressum: https://stgc.fam-hinrichsen.de/index.php?a=imprint';
     send_mail('STGW Mailer', 'noreply@st-gw.de', $_POST['user_name'], $_REQUEST['user_email'], $locale['mail_subject_reg'], $mail_message);
 
     // Update NewRegister

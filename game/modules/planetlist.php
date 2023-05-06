@@ -296,7 +296,7 @@ foreach ($planets as $key => $planet) {
 		{
 			$academy=constant($game->sprache("TEXT22")).' ('.$UNIT_NAME[$game->player['user_race']][$planet['unittrainid_'.($planet['unittrain_actual'])]-1].' ';
 			if ($planet['unittrain_error']==0)
-			$academy.='<b>'.( ($NEXT_TICK+TICK_DURATION*60*($planet['unittrainid_nexttime']-$ACTUAL_TICK)>$NEXT_TICK+TICK_DURATION*60-ACTUAL_TICK) ? Zeit(TICK_DURATION*($planet['unittrainid_nexttime']-$ACTUAL_TICK)) : constant($game->sprache("TEXT20")) ).'</b>)';
+			$academy.='<b>'.( ($NEXT_TICK+TICK_DURATION*60*($planet['unittrainid_nexttime']-$ACTUAL_TICK)>$NEXT_TICK+TICK_DURATION*60-$ACTUAL_TICK) ? Zeit(TICK_DURATION*($planet['unittrainid_nexttime']-$ACTUAL_TICK)) : constant($game->sprache("TEXT20")) ).'</b>)';
 			else
 			{
 				if($planet['unittrain_error']==2){
