@@ -101,6 +101,8 @@ if (($handle = @fopen ($image_url, "rb"))!=true) {
     $color[3]=imagecolorallocatealpha($im, 196, 64, 64,0);
     $color[4]=imagecolorallocatealpha($im, 96, 96, 96,0);
     $color[5]=imagecolorallocatealpha($im, 255, 0, 0,20);
+    $color[6]=imagecolorallocatealpha($im, 200, 200, 0,20);
+    $color[7]=imagecolorallocatealpha($im, 0, 255, 0,20);
 
 
     // ######################################################################
@@ -153,6 +155,8 @@ if (($handle = @fopen ($image_url, "rb"))!=true) {
             $useColor = $color[2];
             $useTitle = $system['system_name'];
 
+			$alert_phase = -1;
+
             // Check all planets in the system
             foreach($planets as $planet) {
 
@@ -160,16 +164,51 @@ if (($handle = @fopen ($image_url, "rb"))!=true) {
                 if ($planet['system_id'] == $system['system_id']) {
 
                     $useTitle .= ' : '.$planet['planet_name'].' : ';
-
                     // Check all fleets orbiting on this planet
                     foreach ($fleets as $fleet)
                     {
                         if($fleet['planet_id'] == $planet['planet_id'])
                         {
-                            $useColor = $color[5];
+							switch($fleet['alert_phase'])
+							{
+								case ALERT_PHASE_GREEN:
+									if($alert_phase < ALERT_PHASE_GREEN)
+									{
+										$alert_phase = ALERT_PHASE_GREEN;
+									}
+									break;
+								case ALERT_PHASE_YELLOW:
+									if($alert_phase < ALERT_PHASE_YELLOW)
+									{
+										$alert_phase = ALERT_PHASE_YELLOW;
+									}
+									break;
+								case ALERT_PHASE_RED:
+									if($alert_phase < ALERT_PHASE_RED)
+									{
+										$alert_phase = ALERT_PHASE_RED;
+									}
+									break;
+							}
                             $useTitle .= '<'.$fleet['fleet_name'].'> ';
                         }
                     }
+					
+					switch($alert_phase)
+					{
+						case ALERT_PHASE_GREEN:
+							$useColor = $color[7];
+							$useTitle .= 'Green';
+							break;
+						case ALERT_PHASE_YELLOW:
+							$useColor = $color[6];
+							$useTitle .= 'Yellow';
+							break;
+						case ALERT_PHASE_RED:
+							$useColor = $color[5];
+							$useTitle .= 'Red';
+							break;
+					}
                 }
             }
 
