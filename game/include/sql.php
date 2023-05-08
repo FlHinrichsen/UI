@@ -131,7 +131,7 @@ class sql {
 
         $query_mode = ($unbuffered) ? MYSQLI_USE_RESULT : MYSQLI_STORE_RESULT;
 
-        $start_time = time() + microtime(true);
+        $start_time = microtime(true);
 
 		$this->select = str_starts_with(strtolower($query),'select');
 		
@@ -139,7 +139,7 @@ class sql {
             return $this->raise_error(false, false, $query);
         }
 
-        $total_time = (time() + microtime(true)) - $start_time;
+        $total_time = ( microtime(true)) - $start_time;
 
         if($this->debug) {
             $this->d_query[] = array(

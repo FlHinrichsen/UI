@@ -21,7 +21,7 @@
 */
 
 
-$start_time = (microtime(true) + time());
+$start_time = (microtime(true));
 ignore_user_abort(true);
 
 

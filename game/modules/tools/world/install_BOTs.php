@@ -55,7 +55,7 @@ class scheduler {
 
 		$this->log('<font color=#0000ff>Starting <b>'.$name.'</b>...</font>',$file);
 
-		$this->start_values[$name] = array( time() + microtime() , $db->i_query );
+		$this->start_values[$name] = array( microtime(true) , $db->i_query );
 	}
 
 	function finish_job($name,$file = '') {
@@ -83,7 +83,7 @@ if(!isset($_GET['sure'])) {
 // ########################################################################################
 // Init
 
-$starttime = ( microtime() + time() );
+$starttime = ( microtime(true) );
 
 $sdl = new scheduler();
 
@@ -116,7 +116,7 @@ $game->out('done.<br><br><b>All BOTs installed, please check <a href="'.$config[
 // ########################################################################################
 // Quit and close log
 
-$sdl->log('<b>Finished Install BOTs in <font color=#009900>'.round((microtime()+time())-$starttime, 4).' secs</font><br>Executed Queries: <font color=#ff0000>'.$db->i_query.'</font></b>',
+$sdl->log('<b>Finished Install BOTs in <font color=#009900>'.round((microtime(true))-$starttime, 4).' secs</font><br>Executed Queries: <font color=#ff0000>'.$db->i_query.'</font></b>',
     INSTALL_LOG_FILE_NPC);
 
 ?>
