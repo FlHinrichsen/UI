@@ -26,7 +26,7 @@ class sql {
     var $login = array(
         'server' => 'localhost',
         'port' => '3306',
-        'database' => 'stfc2',
+        'database' => 'stgc',
         'user' => '',
         'password' => '',
     );
@@ -42,7 +42,7 @@ class sql {
 
     var $i_query = 0;
     var $t_query = 0;
-
+    var $select = false;
 
     var $debug = false;
 
@@ -133,6 +133,8 @@ class sql {
 
         $start_time = time() + microtime(true);
 
+		$this->select = str_starts_with(strtolower($query),'select');
+		
         if(!$this->query_id = @mysqli_query($this->link_id, $query, $query_mode)) {
             return $this->raise_error(false, false, $query);
         }
@@ -218,8 +220,14 @@ class sql {
 
     function num_rows($query_id = false) {
         if($query_id === false) $query_id = $this->query_id;
-
-        $_num = @mysqli_num_rows($query_id);
+		if(!$this->select)
+		{			
+			$_num = @mysqli_affected_rows($this->link_id);
+		}
+		else
+		{
+			$_num = @mysqli_num_rows($query_id);
+		}
 
         if($_num === false) {
             return $this->raise_error();
