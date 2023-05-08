@@ -175,6 +175,8 @@ define ("GER_TEXT75", 'Milit&auml;r Rumpf Typ 3');
 
 define ("GER_TEXT76", 'Schiffe in der Warteschlange');
 
+define ("GER_TEXT77", 'Aktion');
+
 
 //English
 define ("ENG_TEXT0", 'You need');
@@ -332,6 +334,8 @@ define ("ENG_TEXT75", 'Type 3 Military Hulls');
 
 define ("ENG_TEXT76", 'Ships in the queue');
 
+define ("ENG_TEXT77", 'Action');
+
 
 //Italiano
 define ("ITA_TEXT0", 'Necessiti');
@@ -488,5 +492,7 @@ define ("ITA_TEXT74", 'Scafi Militari Tipo 2');
 define ("ITA_TEXT75", 'Scafi Militari Tipo 3');
 
 define ("ITA_TEXT76", 'Navi in coda di costruzione');
+
+define ("ITA_TEXT77", 'Azione');
 
 ?>
