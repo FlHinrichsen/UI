@@ -22,7 +22,7 @@
 
 
 // start timer
-$start_time = (microtime(true) + time());
+$start_time = (microtime(true));
 // Unkommentieren sobald PREBETA startet
 ignore_user_abort(true);
 // nothing to show
