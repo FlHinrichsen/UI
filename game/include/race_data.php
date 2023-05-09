@@ -455,7 +455,7 @@ $RACE_DATA = array(
 
       29 => array(1, 1, 0, 1, 1),
 
-      30 => false,
+      30 => true,
        
       31 => 80
 
@@ -525,9 +525,9 @@ $RACE_DATA = array(
 
       29 => array(0, 0, 0, 0, 0),
 
-      30 => false,
+      30 => true,
        
-      31 => 0
+      31 => 45
 
 ), 
 
@@ -735,9 +735,9 @@ $RACE_DATA = array(
 
       29 => array(1, 1, 0, 1, 1),
 
-      30 => false,
+      30 => true,
         
-      31 => 0
+      31 => 45
 
    ), 
 
@@ -805,7 +805,7 @@ $RACE_DATA = array(
 
       29 => array(0, 0, 1, 1, 1),
 
-      30 => false,
+      30 => true,
         
       31 => 80
 
@@ -875,9 +875,9 @@ $RACE_DATA = array(
 
       29 => array(0, 0, 0, 0, 0),
 
-      30 => false,
+      30 => true,
         
-      31 => 0
+      31 => 45
 
    ), 
 
@@ -947,7 +947,7 @@ $RACE_DATA = array(
 
       29 => array(0, 0, 1, 1, 1),
 
-      30 => false,
+      30 => true,
         
       31 => 45
 
