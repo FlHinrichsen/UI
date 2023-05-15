@@ -828,20 +828,20 @@ $game->out('
           <td width=180><b>'.constant($game->sprache("TEXT35")).'</b></td>
           <td align="center" width=180><b>'.constant($game->sprache("TEXT97")).'</b></td></tr>');
 //borg_target table reading for threat information
-$borg_target_query = $db->query('SELECT u.user_name, bt.threat_level FROM borg_target bt INNER JOIN user u ON bt.user_id = u.user_id ORDER BY threat_level DESC LIMIT 0,10');
+$borg_target_query = $db->query('SELECT u.user_name, u.user_id, bt.threat_level FROM borg_target bt INNER JOIN user u ON bt.user_id = u.user_id ORDER BY threat_level DESC LIMIT 0,10');
 while($btrow = $db->fetchrow($borg_target_query))
 {
 	if($btrow['threat_level'] > 1400.0)
-		$threat_string = 'AAA';
+		$threat_string = '<font color="#ff0000">A</font>';
 	elseif($btrow['threat_level'] > 950.0)
-		$threat_string = 'AA';
+		$threat_string = '<font color="#ff8800">B</font>';
 	elseif($btrow['threat_level'] > 450.0)
-		$threat_string = 'A';
+		$threat_string = '<font color="#ffff00">C</font>';
 	elseif($btrow['threat_level'] > 200.0)
-		$threat_string = 'B';
+		$threat_string = 'D';
 	else
-		$threat_string = 'C';
-	$game->out('<tr><td>'.$btrow['user_name'].'</td><td align="center">'.$threat_string.'</td></tr>');
+		$threat_string = '<font color="#888888">E</font>';
+	$game->out('<tr><td><a href="'.parse_link('a=stats&a2=viewplayer&id='.$btrow['user_id']).'">'.$btrow['user_name'].'</a></td><td align="center">'.$threat_string.'</td></tr>');
 }
 $game->out('
       </table>
