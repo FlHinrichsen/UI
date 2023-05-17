@@ -194,6 +194,7 @@ class sql {
 
     function queryrow($query, $result_type = MYSQLI_ASSOC) {
         if(!$_qid = $this->query($query)) {
+			message(DATABASE_ERROR, 'SQL: '.$query);
             return false;
         }
 
@@ -202,6 +203,7 @@ class sql {
 
     function queryrowset($query, $result_type = MYSQLI_ASSOC) {
         if(!$_qid = $this->query($query, true)) {
+			message(DATABASE_ERROR, 'SQL: '.$query);
             return false;
         }
 

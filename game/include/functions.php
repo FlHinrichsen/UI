@@ -127,7 +127,7 @@ function GetTabbyAction($tab) {
 // #############################################################################
 
 function message($type, $message, $add = false) {
-	global $game;
+	global $game, $sdl;
 
 	/* 29/04/08 - AC: If present, add user name to the log file */
 	if(isset($game->player['user_name']))
@@ -190,8 +190,7 @@ function message($type, $message, $add = false) {
 		case DATABASE_ERROR:
             // Check if we're called from the scheduler or the UI
             if (IN_SCHEDULER) {
-                $file = TICK_LOG_FILE;
-                $message_log = $message."<br>\n";
+				$sdl->error($message);
             }
             else {
                 if(!is_object($add)) {
@@ -205,12 +204,12 @@ function message($type, $message, $add = false) {
 
                 $file = ERROR_LOG_FILE;
                 $message_log = '<hr><br><br><br><br><i>'.date('d.m.y H:i:s', time()).'</i>&nbsp;&nbsp;&nbsp;<b>User:</b>&nbsp;'.$username.'&nbsp;&nbsp;&nbsp;<b>Database Error:</b><br>'.$message.'<br><br>'.$add->error['message'].' ('.$add->error['number'].')<br><br>'.$add->error['sql']."\n";
-            }
-
-			$fp = fopen($file, 'a');
-			if($fp) {
-			    fwrite($fp, $message_log);
-			    fclose($fp);
+            
+				$fp = fopen($file, 'a');
+				if($fp) {
+					fwrite($fp, $message_log);
+					fclose($fp);
+				}
 			}
 		break;
 
@@ -230,8 +229,9 @@ function message($type, $message, $add = false) {
 			message(GENERAL, 'Invalid function call', 'message(): Unknown error type '.$type);
 		break;
 	}
-
-	exit;
+	if (!IN_SCHEDULER) {
+		exit;
+	}
 }
 
 // #############################################################################
@@ -651,7 +651,8 @@ function get_system_fleet_sensors($system_id) {
                   f.user_id = '.$game->player['user_id'];
     
     if(!$sv = $db->queryrow($sql)) {
-        message(DATABASE_ERROR, 'Could not query user orbit data');
+        message(DATABASE_ERROR, 'get_system_fleet_sensors: Could not query user orbit data');
+        message(DATABASE_ERROR, 'SQL: '.$sql);
     }
     
     if(!isset($sv['sensor_value']) || empty($sv['sensor_value'])) return 0;
@@ -668,7 +669,8 @@ function get_system_planetary_sensors($system_id) {
     $sql = 'SELECT SUM(building_7 + 1) as sensor_value FROM planets WHERE system_id = '.$system_id.' AND planet_owner = '.$game->player['user_id'];
     
     if(!$sv = $db->queryrow($sql)) {
-        message(DATABASE_ERROR, 'Could not query user orbit data');
+        message(DATABASE_ERROR, 'get_system_planetary_sensors: Could not query user orbit data');
+        message(DATABASE_ERROR, 'SQL: '.$sql);
     }
     
     if(!isset($sv['sensor_value']) || empty($sv['sensor_value'])) return 0;
@@ -701,8 +703,10 @@ function get_friendly_orbit_fleets($system_id, $user_id = 0, $user_alliance = 0)
 		WHERE p.system_id = '.$system_id.' AND
 		f.user_id <> '.$user_id;
 
-	if(!$q_user = $db->queryrowset($sql)) {
-		message(DATABASE_ERROR, 'Could not query user orbit data');
+	if(($q_user = $db->queryrowset($sql)) === false) 
+	{
+        message(DATABASE_ERROR, 'SQL: '.$sql);
+		message(DATABASE_ERROR, 'get_friendly_orbit_fleets: Could not query user orbit data');
 	}
 
 	$allied_user = array($user_id);
@@ -754,6 +758,7 @@ function get_friendly_orbit_fleets($system_id, $user_id = 0, $user_alliance = 0)
 
 	if(!$q_ships = $db->query($sql)) {
 		message(DATABASE_ERROR, 'Could not query ships data');
+		message(DATABASE_ERROR, 'sql: '.sql);
 	}
 
 	$ships = $db->fetchrow($q_ships);
