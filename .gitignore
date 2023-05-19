@@ -13,3 +13,4 @@ game/maps/images/galaxy_detail_small.png
 game/kurs/*.png
 game/maps/images/galaxy_detail_small.png
 game/maps/images/galaxy_detail.png
+*.bak
