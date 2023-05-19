@@ -167,6 +167,14 @@ define("GER_TEXT71", '<b>Erweiterung der Planetaren Verteidigung:</ b> Ein Techn
 
 define("GER_TEXT72", '<b>Erweiterung der Planetaren Verteidigung:</b>Die Bereitstellung von Technologien zur Verbesserung der Oberfl&auml;chenverteidigung hilft durch die Erh&ouml;hung der max. m&ouml;glichen Anzahl von leichten und schweren Orbitalgesch&uuml;tze auf diesem Planeten weiter.');
 
+define("GER_TEXT76", '<b>Präsidium: Tech Supremacy</b>: Ein diplomatisches Team wird mit dem Ziel entsandt, den Wert und die Bedeutung unseres technischen Supports für die Kolonie zu fördern und zu bekräftigen und unseren Einfluss darauf zu festigen.');
+
+define("GER_TEXT77", '<b>Delegation: Praetors Pride</b> Ein diplomatisches Team wird mit dem Ziel entsandt, den Wert und die Bedeutung unseres technischen Supports für die Kolonie zu fördern und zu bekräftigen und unseren Einfluss auf sie zu festigen.');
+
+define("ITA_TEXT78", '<b>Präsidium: Herausforderung des Mutes</b>: Ein Team erfahrener Krieger wird entsandt, um der Kolonie ein richtiges Gefühl von Ehre und Stärke zu vermitteln, auch durch Tapferkeitstests gegen mögliche ausländische Delegationen.');
+
+define("GER_TEXT84", '<b>Trupp-Wiederherstellung</b>: Das Schiff wird versuchen, einen unserer gelandeten Trupps zu bergen.');
+
 define("GER_TEXT85", '<b>Medizinische Forschung:</b>: Die Bereitstellung medizinischer Technologien zur Verbesserung der Gesundheitsbedingungen in der Kolonie, f&uuml;hren zu einem Anstieg in der arbeitenden Bev&ouml;lkerung.');
 
 define("GER_TEXT86", '<b>Erweitertes Training:</b>: Durch die Landung eines Aussenteams auf einer Kolonie, welche f&uuml;r die Ausbildung von Bodentruppen ger&uuml;stet ist, kann ein Landungsteam bis auf das h&ouml;chste Niveau trainiert werden.');
