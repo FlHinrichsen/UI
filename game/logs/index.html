@@ -1,0 +1,88 @@
+<head>
+	<script src="jquery-3.6.4.min.js"></script>
+	<script src="jquery.dataTables.min.js"></script>
+	<script>
+		$(function() {
+
+			var $mytable = $("#example");
+			var page = 25;
+			var count = 0; //initial number of rows 
+			var max = 500; //max number of rows (just for demo)
+			var $datatable = $mytable.DataTable({
+				"paging": false,
+				"bFilter": false
+			}); //init the datatable and return a refence to it
+
+
+
+			//listen for scroll and resize and custom 'fetchmore' events
+			$(window).bind('scroll resize fetchmore', function() {
+				var viewportHeight = window.innerHeight;
+				var scrolltop = $(window).scrollTop();
+				var bottomOfTable = $mytable.offset().top + $mytable.outerHeight();
+
+				//console.log(viewportHeight, scrolltop, bottomOfTable);
+
+				if ($(window).scrollTop() + viewportHeight >= bottomOfTable) {
+					if (count < max) {
+						//console.log("Fetch more data!");
+						load_more();
+						$(window).trigger("fetchmore"); //keep triggering this event until we've filled the viewport
+					}
+				}
+			});
+
+			function load_more() {
+			//fetch more data here
+
+				for(var i = 0;i<= page;i++){
+					count++;
+					$.ajax({
+						type: "POST",
+						url: "log_api.php",
+						data: "{id: " + count + "}",
+						contentType: "text/json; charset=utf-8",
+						dataType: "json",
+						success: function (data) {
+							$datatable.row.add([
+								data[0],
+								data[1],
+								data[2],
+								data[3],
+								data[4],
+								data[5]
+							]).draw(false);
+						}
+					});		
+				}
+			}
+
+			//trigger initial fetch
+			$(window).trigger("fetchmore");
+		});
+	</script>
+</head>
+<body>
+	<table id="example" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>time</th>
+                <th>level</th>
+                <th>module</th>
+                <th>job</th>
+                <th>message</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <th>id</th>
+                <th>time</th>
+                <th>level</th>
+                <th>module</th>
+                <th>job</th>
+                <th>message</th>
+            </tr>
+        </tfoot>
+    </table>
+</body>

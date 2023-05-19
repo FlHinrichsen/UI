@@ -3,7 +3,6 @@ game/ERROR_LOG_FILE
 config.inc.php
 game/tmpsec/
 game/maps/
-game/logs/
 game/sig_tmp/
 supportcenter/actionlog
 game/logs/daily.log
@@ -13,3 +12,6 @@ game/maps/images/galaxy_detail_small.png
 game/kurs/*.png
 game/maps/images/galaxy_detail_small.png
 game/maps/images/galaxy_detail.png
+*.bak
+*.gz
+*.log
