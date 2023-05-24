@@ -1168,7 +1168,7 @@ function ShipSelection(cSelectType) {
               </tr>
               <tr>
                 <td>'.constant($game->sprache("TEXT61")).'</td>
-                <td><input class="field" type="text" name="new_ship_ncc" id="ship_ncc" value="" maxlength="12" size="25"></td>
+                <td><input class="field" type="text" name="new_ship_ncc" id="ship_ncc" value="" maxlength="20" size="25"></td>
                 <td><input class="button" style="width: 100%;" type="submit" name="change_ship_ncc" value="'.constant($game->sprache("TEXT66")).'"></td>
               </tr>
             </table>
